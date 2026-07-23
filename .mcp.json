@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "paper_search_server": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "C:/GitHub/MCP/paper-search-mcp",
+        "-m",
+        "paper_search_mcp.server"
+      ]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest", "--browserUrl", "http://127.0.0.1:9222"],
+      "env": {},
+      "timeout": 3000
+    }
+  }
+}
