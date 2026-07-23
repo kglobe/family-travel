@@ -86,7 +86,30 @@ body{
   text-transform:uppercase;margin-bottom:4px;
 }
 .header-title{font-size:30px;font-weight:800;letter-spacing:1px;line-height:1.2}
-.header-title span{color:#ffd25e}
+.header-title .tc{
+  display:inline-block;
+  background:linear-gradient(110deg,#fff 42%,#bfe6ff 50%,#fff 58%);
+  background-size:250% 100%;background-position:200% 0;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:char-in .6s cubic-bezier(.2,1.6,.35,1) backwards,
+            shimmer 3.5s ease-in-out 1.2s infinite;
+}
+.header-title .gold{background-image:linear-gradient(110deg,#ffd25e 42%,#fff3c4 50%,#ffd25e 58%)}
+.header-title .tc:nth-child(1){animation-delay:.05s,1.2s}
+.header-title .tc:nth-child(2){animation-delay:.13s,1.32s}
+.header-title .tc:nth-child(3){animation-delay:.21s,1.44s}
+.header-title .tc:nth-child(4){animation-delay:.29s,1.56s}
+.header-title .tc:nth-child(5){animation-delay:.37s,1.68s}
+.header-title .tc:nth-child(6){animation-delay:.45s,1.8s}
+@keyframes char-in{
+  from{opacity:0;transform:translateY(20px) scale(.5) rotate(-8deg)}
+  to{opacity:1;transform:none}
+}
+@keyframes shimmer{
+  0%{background-position:200% 0}
+  60%,100%{background-position:-60% 0}
+}
+@media(prefers-reduced-motion:reduce){.header-title .tc{animation:none}}
 .header-dates{font-size:15px;opacity:.75;margin-top:6px;font-weight:500}
 .header-badge{
   display:inline-flex;align-items:center;gap:6px;margin-top:12px;
@@ -94,6 +117,13 @@ body{
   padding:6px 14px;border-radius:20px;font-size:15px;font-weight:600;
 }
 .header-badge .ms{font-size:17px}
+.header-badge .ms.takeoff{animation:takeoff 1.2s ease-in forwards}
+@keyframes takeoff{
+  0%{transform:translate(0,0) rotate(0);opacity:1}
+  15%{transform:translate(2px,-1px) rotate(50deg);opacity:1}
+  60%{transform:translate(28px,-22px) rotate(50deg);opacity:1}
+  100%{transform:translate(90px,-70px) rotate(50deg);opacity:0}
+}
 
 /* Bottom nav */
 .bottom-bar{
@@ -334,7 +364,7 @@ body{
 
 <div class="header">
   <div class="header-eyebrow">Family Trip 2026</div>
-  <div class="header-title">大<span>阪</span>親子旅行</div>
+  <div class="header-title"><span class="tc">大</span><span class="tc gold">阪</span><span class="tc">親</span><span class="tc">子</span><span class="tc">旅</span><span class="tc">行</span></div>
   <div class="header-dates">07.25 (六) — 07.30 (四)　·　6天5夜</div>
   <div class="header-badge" id="countdown"></div>
 </div>
@@ -665,7 +695,14 @@ function updateCountdown(){
   el.innerHTML='';
   if(now<start){
     const diff=Math.ceil((start-now)/(1000*60*60*24));
-    el.append(icon('flight'),'距離出發還有 '+diff+' 天');
+    const plane=icon('flight');
+    el.style.cursor='pointer';
+    el.onclick=()=>{
+      if(plane.classList.contains('takeoff'))return;
+      plane.classList.add('takeoff');
+      plane.addEventListener('animationend',()=>plane.classList.remove('takeoff'),{once:true});
+    };
+    el.append(plane,'距離出發還有 '+diff+' 天');
   }else if(now<=end){
     el.append(icon('celebration'),'旅途愉快！享受大阪吧');
   }else{
