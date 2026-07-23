@@ -451,6 +451,7 @@ button:focus-visible,a:focus-visible{
 const DAYS = [
   { date:'7/25', weekday:'六', items:[
     {time:'6:00',name:'搭計程車前往機場',icon:'local_taxi',type:'transport',note:'預計 6:20 到機場'},
+    {time:'8:30',name:'搭飛機去大阪',icon:'flight_takeoff',type:'transport',note:'KHH 08:30 起飛（GMT+8）→ KIX 12:40 抵達（GMT+9）',pdf:'https://drive.google.com/file/d/1O0TGBvwEofTS5JyviTLm6QKAWegTntz6/view?usp=drive_link'},
     {name:'南海電鐵 → 大阪市區',icon:'train',type:'transport',note:'抵達關西機場後搭南海電鐵進市區'},
     {name:'ESLEAD HOTEL Osaka Nipponbashi',icon:'hotel',type:'transport',note:'先放行李',map:'https://maps.app.goo.gl/Hu8ccNyhdujieZWL8'},
     {name:'Super Kids Land 本店',icon:'toys',type:'shopping',map:'https://maps.app.goo.gl/5k5QuscjUjUTbUtW9',note:'玩具店'},
@@ -464,7 +465,7 @@ const DAYS = [
     {name:'晚餐',icon:'rice_bowl',type:'food',note:'看煙火，吃超商 / 飯店旁邊飯糰店'},
   ]},
   { date:'7/26', weekday:'日', items:[
-    {name:'大阪城',icon:'castle',type:'attraction',map:'https://maps.app.goo.gl/TsP7vgZCurErRJXR8',note:'接駁車：森之宮站 3-B 出口，噴水池左邊',subs:[
+    {name:'大阪城',icon:'castle',type:'attraction',map:'https://maps.app.goo.gl/TsP7vgZCurErRJXR8',note:'週日營業 09:00–18:00｜接駁車：森之宮站 3-B 出口，噴水池左邊',subs:[
       {name:'城堡外面有 2 個遊戲區'},
       {name:'Playville by Børnelund',map:'https://maps.app.goo.gl/VHABVGPcXSMrvdct5'},
     ]},
@@ -480,13 +481,14 @@ const DAYS = [
     {name:'Kinnobuta Premium 心斎橋',icon:'restaurant',type:'food',note:'豬肉涮涮鍋',map:'https://maps.app.goo.gl/V8t9BPqrZbTTAbiG8',reserve:'18:00 已預約 2大1小（有預定費）'},
   ]},
   { date:'7/27', weekday:'一', items:[
-    {name:'大阪海遊館',icon:'waves',type:'attraction',map:'https://maps.app.goo.gl/UegSLbQ31DQBuqxeA',note:'旁邊可以爬最矮的山'},
-    {name:'零食博物館 Tempozan',icon:'cookie',type:'attraction',map:'https://maps.app.goo.gl/YCRu1fZqx5frcWs38',note:'Confectionery Museum'},
+    {name:'大阪海遊館',icon:'waves',type:'attraction',map:'https://maps.app.goo.gl/UegSLbQ31DQBuqxeA',note:'週一營業 09:30–20:00'},
+    {name:'天保山（日本最矮的山）',icon:'landscape',type:'attraction',map:'https://www.google.com/maps/search/?api=1&query=%E5%A4%A9%E4%BF%9D%E5%B1%B1%E5%B1%B1%E9%A0%82',note:'標高 4.53m，海遊館旁天保山公園內，山頂觀景台旁'},
+    {name:'零食博物館 Tempozan',icon:'cookie',type:'attraction',map:'https://maps.app.goo.gl/YCRu1fZqx5frcWs38',note:'週一營業 09:30–19:00'},
     {name:'難波逛街',icon:'storefront',type:'shopping'},
     {name:'蟹吉 Premium',icon:'set_meal',type:'food',map:'https://maps.app.goo.gl/TkD9z3vVJmSx8YRCA',reserve:'18:00 已預約 2大1小'},
   ]},
   { date:'7/28', weekday:'二', items:[
-    {name:'大阪兒童樂園 Kids Plaza Osaka',icon:'attractions',type:'attraction',map:'https://maps.app.goo.gl/YpufHomyeWUMbmpz6'},
+    {name:'大阪兒童樂園 Kids Plaza Osaka',icon:'attractions',type:'attraction',map:'https://maps.app.goo.gl/YpufHomyeWUMbmpz6',note:'週二營業 09:30–17:00'},
     {name:'西洋茶館',icon:'local_cafe',type:'food',map:'https://maps.app.goo.gl/WVFUuS9wPUNRtTQX8'},
     {name:'梅田',icon:'local_mall',type:'shopping',subs:[
       {name:'petit main（梓琪的衣服）',map:'https://maps.app.goo.gl/9gVzoBVWt5Wk1WRx6'},
@@ -503,7 +505,7 @@ const DAYS = [
   ]},
   { date:'7/30', weekday:'四', items:[
     {name:'整理行李、退房',icon:'luggage',type:'transport',note:'9 點起床，整理好直接去機場'},
-    {time:'13:45',name:'搭飛機回台灣',icon:'flight_takeoff',type:'transport',note:'中午的飛機，要提早到機場'},
+    {time:'13:45',name:'搭飛機回台灣',icon:'flight_takeoff',type:'transport',note:'KIX 13:45 起飛（GMT+9）→ KHH 16:00 抵達（GMT+8），要提早到機場',pdf:'https://drive.google.com/file/d/1O0TGBvwEofTS5JyviTLm6QKAWegTntz6/view?usp=drive_link'},
   ]},
 ];
 
@@ -604,6 +606,10 @@ function renderDay(idx){
     if(item.map){
       body.appendChild(h('a',{className:'map-link',href:item.map,target:'_blank',rel:'noopener'},
         icon('location_on'),'開啟地圖'));
+    }
+    if(item.pdf){
+      body.appendChild(h('a',{className:'map-link',href:item.pdf,target:'_blank',rel:'noopener'},
+        icon('picture_as_pdf'),'預訂 PDF'));
     }
     if(item.subs&&item.subs.length){
       const sub=h('div',{className:'card-sub'});
