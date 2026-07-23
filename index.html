@@ -307,6 +307,15 @@ body{
 }
 .day-header-date{font-size:20px;font-weight:800}
 
+/* 寬螢幕 / 瀏覽器誤開「電腦版網站」時：置中成手機 App 版面 */
+@media(min-width:600px){
+  .header,main{max-width:520px;margin:0 auto}
+  .header{border-radius:0 0 0 0}
+  .bottom-bar{max-width:520px;left:50%;transform:translateX(-50%);
+    border-left:1px solid var(--surface-alt);border-right:1px solid var(--surface-alt);
+    border-radius:16px 16px 0 0}
+}
+
 /* Galaxy S25 等窄螢幕 (~360px) */
 @media(max-width:374px){
   .header{padding:26px 16px 22px}
