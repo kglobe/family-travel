@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1b2838">
+<title>大阪親子旅行 2026</title>
+<style>
+:root {
+  --bg: #faf8f4;
+  --surface: #ffffff;
+  --surface-alt: #f0ede6;
+  --text: #1b2838;
+  --text-muted: #6b7280;
+  --accent: #d35233;
+  --accent-light: #fef0ed;
+  --teal: #1a8a7a;
+  --teal-light: #e6f5f3;
+  --gold: #c8922a;
+  --gold-light: #fdf6e3;
+  --navy: #1b2838;
+  --radius: 14px;
+  --ease: cubic-bezier(.4,0,.2,1);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media(prefers-color-scheme:dark){
+  :root {
+    --bg: #111318;
+    --surface: #1c1f26;
+    --surface-alt: #252830;
+    --text: #e8e6e1;
+    --text-muted: #8b8d94;
+    --accent: #e8644a;
+    --accent-light: #2a1c18;
+    --teal: #2db8a4;
+    --teal-light: #162825;
+    --gold: #e0a83a;
+    --gold-light: #262012;
+    --navy: #e8e6e1;
+  }
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Noto Sans CJK TC",sans-serif;
+  background:var(--bg);color:var(--text);
+  line-height:1.6;overflow-x:hidden;
+  padding-bottom:calc(72px + var(--safe-bottom));
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* Header */
+.header{
+  background:linear-gradient(135deg,#1b2838 0%,#2d4a5e 100%);
+  color:#fff;padding:40px 20px 28px;
+  position:relative;overflow:hidden;
+}
+@media(prefers-color-scheme:dark){
+  .header{background:linear-gradient(135deg,#0d1117 0%,#1b2838 100%)}
+}
+.header::after{
+  content:'';position:absolute;bottom:-1px;left:0;right:0;height:24px;
+  background:var(--bg);border-radius:24px 24px 0 0;
+}
+.header-eyebrow{
+  font-size:13px;letter-spacing:2px;opacity:.7;
+  text-transform:uppercase;margin-bottom:4px;
+}
+.header-title{font-size:32px;font-weight:800;letter-spacing:1px;line-height:1.2}
+.header-title span{color:#e8644a}
+.header-dates{font-size:14px;opacity:.75;margin-top:6px;font-weight:500}
+.header-badge{
+  display:inline-block;margin-top:12px;
+  background:rgba(255,255,255,.15);backdrop-filter:blur(8px);
+  padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;
+}
+
+/* Bottom nav */
+.bottom-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--surface);
+  border-top:1px solid var(--surface-alt);
+  display:flex;z-index:100;
+  padding-bottom:var(--safe-bottom);
+}
+.bottom-bar button{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:10px 0 8px;border:none;background:none;
+  color:var(--text-muted);font-size:11px;font-weight:600;
+  cursor:pointer;transition:color .2s var(--ease);
+  -webkit-tap-highlight-color:transparent;
+}
+.bottom-bar button .tab-icon{font-size:22px;transition:transform .2s var(--ease)}
+.bottom-bar button.active{color:var(--accent)}
+.bottom-bar button.active .tab-icon{transform:scale(1.15)}
+
+/* Day pills */
+.day-nav{
+  display:flex;gap:8px;padding:16px 20px 8px;
+  overflow-x:auto;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.day-nav::-webkit-scrollbar{display:none}
+.day-pill{
+  flex-shrink:0;padding:8px 16px;border-radius:20px;
+  border:1.5px solid var(--surface-alt);background:var(--surface);
+  font-size:14px;font-weight:600;cursor:pointer;
+  transition:all .25s var(--ease);white-space:nowrap;
+  -webkit-tap-highlight-color:transparent;
+}
+.day-pill.active{
+  background:var(--accent);color:#fff;border-color:var(--accent);
+  box-shadow:0 4px 12px rgba(211,82,51,.3);
+}
+
+/* Sections */
+.tab-content{display:none;padding:8px 16px 24px;min-height:60vh}
+.tab-content.active{display:block;animation:fadeUp .35s var(--ease)}
+
+/* Cards */
+.card{
+  background:var(--surface);border-radius:var(--radius);
+  padding:16px;margin-bottom:12px;
+  border-left:4px solid var(--surface-alt);
+  box-shadow:0 1px 3px rgba(0,0,0,.04);
+  transition:transform .15s var(--ease),box-shadow .15s var(--ease);
+  animation:fadeUp .4s var(--ease) both;
+}
+.card:active{transform:scale(.985)}
+.card.food{border-left-color:var(--accent)}
+.card.attraction{border-left-color:var(--teal)}
+.card.shopping{border-left-color:var(--gold)}
+.card.transport{border-left-color:var(--text-muted)}
+.card.festival{border-left-color:#9b59b6}
+
+.card-header{display:flex;align-items:flex-start;gap:10px}
+.card-icon{font-size:22px;flex-shrink:0;line-height:1.4}
+.card-body{flex:1;min-width:0}
+.card-title{font-size:16px;font-weight:700;line-height:1.3}
+.card-time{
+  font-size:12px;font-weight:700;color:var(--accent);
+  background:var(--accent-light);padding:2px 8px;border-radius:8px;
+  display:inline-block;margin-bottom:4px;
+}
+.card-note{font-size:13px;color:var(--text-muted);margin-top:4px;line-height:1.5}
+.card-sub{
+  margin-top:8px;padding-top:8px;border-top:1px solid var(--surface-alt);
+  font-size:13px;
+}
+.card-sub-item{
+  display:flex;align-items:center;gap:6px;
+  padding:4px 0;color:var(--text);
+}
+.card-sub-item::before{content:'·';color:var(--text-muted);font-weight:bold}
+
+.map-link{
+  display:inline-flex;align-items:center;gap:4px;
+  color:var(--teal);font-size:13px;font-weight:600;
+  text-decoration:none;padding:6px 12px;margin-top:8px;
+  background:var(--teal-light);border-radius:10px;
+  transition:opacity .15s;
+}
+.map-link:active{opacity:.7}
+
+.reserve-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--accent-light);color:var(--accent);
+  padding:4px 10px;border-radius:8px;font-size:12px;
+  font-weight:700;margin-top:6px;
+  animation:pulse 2.5s ease-in-out infinite;
+}
+
+/* Section headers */
+.section-title{
+  font-size:13px;font-weight:700;color:var(--text-muted);
+  text-transform:uppercase;letter-spacing:1.5px;
+  padding:20px 4px 10px;
+}
+
+/* Checklist */
+.check-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 16px;margin-bottom:6px;
+  background:var(--surface);border-radius:var(--radius);
+  cursor:pointer;transition:opacity .2s;
+  -webkit-tap-highlight-color:transparent;
+  animation:fadeUp .35s var(--ease) both;
+}
+.check-item.checked{opacity:.5}
+.check-item.checked .check-label{text-decoration:line-through}
+.check-box{
+  width:22px;height:22px;border-radius:6px;flex-shrink:0;
+  border:2px solid var(--surface-alt);display:flex;
+  align-items:center;justify-content:center;
+  transition:all .2s var(--ease);margin-top:1px;
+}
+.check-item.checked .check-box{
+  background:var(--teal);border-color:var(--teal);
+}
+.check-box::after{
+  content:'✓';color:#fff;font-size:13px;font-weight:bold;
+  opacity:0;transform:scale(0);transition:all .2s var(--ease);
+}
+.check-item.checked .check-box::after{opacity:1;transform:scale(1)}
+.check-label{font-size:15px;line-height:1.5}
+.check-category{
+  font-size:14px;font-weight:700;padding:16px 4px 8px;
+  color:var(--text);
+}
+
+/* Shopping items */
+.shop-card{
+  background:var(--surface);border-radius:var(--radius);
+  padding:14px 16px;margin-bottom:8px;
+  animation:fadeUp .35s var(--ease) both;
+}
+.shop-name{font-size:15px;font-weight:600}
+.shop-detail{font-size:13px;color:var(--text-muted);margin-top:2px}
+.shop-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.shop-link{
+  font-size:12px;padding:4px 10px;border-radius:8px;
+  background:var(--gold-light);color:var(--gold);
+  text-decoration:none;font-weight:600;
+}
+
+/* Notes section */
+.note-card{
+  background:var(--surface);border-radius:var(--radius);
+  padding:16px;margin-bottom:12px;
+  animation:fadeUp .35s var(--ease) both;
+}
+.note-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.note-card p,.note-card li{font-size:14px;line-height:1.7;color:var(--text)}
+.note-card ul{padding-left:18px}
+.note-card li{margin-bottom:4px}
+.note-card a{color:var(--teal);text-decoration:none;font-weight:500}
+
+/* Expense table */
+.expense-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+.expense-table td{padding:8px 4px;border-bottom:1px solid var(--surface-alt)}
+.expense-table td:last-child{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* Laundry table */
+.laundry-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);gap:4px;
+  font-size:12px;text-align:center;margin-top:8px;
+}
+.laundry-grid .lh{font-weight:700;padding:6px 2px;color:var(--text-muted)}
+.laundry-grid .lc{
+  padding:6px 2px;background:var(--surface-alt);border-radius:6px;
+  font-size:11px;
+}
+
+/* Animations */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes pulse{
+  0%,100%{opacity:1}
+  50%{opacity:.7}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    transition-duration:.01ms!important;
+  }
+}
+
+/* Day header */
+.day-header{
+  padding:12px 4px 4px;display:flex;align-items:baseline;gap:10px;
+}
+.day-header-date{font-size:22px;font-weight:800}
+.day-header-note{font-size:13px;color:var(--text-muted);font-weight:500}
+
+/* Collapsible */
+.collapse-toggle{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;padding:14px 16px;background:var(--surface);
+  border:none;border-radius:var(--radius);cursor:pointer;
+  font-size:15px;font-weight:700;color:var(--text);
+  margin-bottom:8px;text-align:left;
+  -webkit-tap-highlight-color:transparent;
+}
+.collapse-toggle::after{
+  content:'›';font-size:20px;font-weight:400;color:var(--text-muted);
+  transition:transform .25s var(--ease);
+}
+.collapse-toggle.open::after{transform:rotate(90deg)}
+.collapse-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s var(--ease);
+}
+.collapse-body.open{max-height:3000px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-eyebrow">Family Trip 2026</div>
+  <div class="header-title">大<span>阪</span>親子旅行</div>
+  <div class="header-dates">07.25 (六) — 07.30 (四)　·　6天5夜</div>
+  <div class="header-badge" id="countdown"></div>
+</div>
+
+<main>
+  <!-- 行程 -->
+  <div class="tab-content active" id="tab-itinerary">
+    <div class="day-nav" id="dayNav"></div>
+    <div id="dayContent"></div>
+  </div>
+
+  <!-- 購物 -->
+  <div class="tab-content" id="tab-shopping">
+    <div class="section-title">購物清單</div>
+    <div id="shopContent"></div>
+  </div>
+
+  <!-- 行李 -->
+  <div class="tab-content" id="tab-packing">
+    <div class="section-title">行李清單</div>
+    <div id="packContent"></div>
+  </div>
+
+  <!-- 備忘 -->
+  <div class="tab-content" id="tab-notes">
+    <div class="section-title">旅行備忘</div>
+    <div id="notesContent"></div>
+  </div>
+</main>
+
+<nav class="bottom-bar">
+  <button class="active" data-tab="itinerary"><span class="tab-icon">📅</span>行程</button>
+  <button data-tab="shopping"><span class="tab-icon">🛍️</span>購物</button>
+  <button data-tab="packing"><span class="tab-icon">🎒</span>行李</button>
+  <button data-tab="notes"><span class="tab-icon">📋</span>備忘</button>
+</nav>
+
+<script>
+// --- DATA ---
+const DAYS = [
+  { date:'7/25', weekday:'六', items:[
+    {time:'6:00',name:'搭計程車前往機場',icon:'🚕',type:'transport',note:'預計 6:20 到機場'},
+    {name:'Super Kids Land 本店',icon:'🧸',type:'shopping',map:'https://maps.app.goo.gl/5k5QuscjUjUTbUtW9',note:'玩具店'},
+    {name:'難波公園 Namba Parks',icon:'🏬',type:'shopping',note:'百貨公司',subs:[
+      {name:'Alpen',map:'https://maps.app.goo.gl/kgj7wZ9dmZU9iSiR8'},
+      {name:'HARBS Namba Parks',map:'https://maps.app.goo.gl/v4SWyKBFLHUyJCcy5'},
+      {name:"FREAK'S STORE",map:'https://maps.app.goo.gl/bPYNZtNwBDXcyBv78'},
+    ]},
+    {name:'MontBell',icon:'🧥',type:'shopping',map:'https://maps.app.goo.gl/abQWhiwtUm1wHkR1A'},
+    {name:'天神祭',icon:'🎆',type:'festival',note:'櫻宮神社',map:'https://maps.app.goo.gl/yiy7wYKBd6kkdiXy5'},
+    {name:'晚餐',icon:'🍙',type:'food',note:'看煙火，吃超商 / 飯店旁邊飯糰店'},
+  ]},
+  { date:'7/26', weekday:'日', items:[
+    {name:'大阪城',icon:'🏯',type:'attraction',map:'https://maps.app.goo.gl/TsP7vgZCurErRJXR8',note:'接駁車：森之宮站 3-B 出口，噴水池左邊',subs:[
+      {name:'城堡外面有 2 個遊戲區'},
+      {name:'Playville by Børnelund',map:'https://maps.app.goo.gl/VHABVGPcXSMrvdct5'},
+    ]},
+    {name:'心齋橋',icon:'🛍️',type:'shopping',note:'⚠️ 人多注意扒手',subs:[
+      {name:'Anello',map:'https://maps.app.goo.gl/cjTGDBDwjfLRBj9F6'},
+      {name:'文具店',map:'https://maps.app.goo.gl/o88S8hFkDd6PdpPm8'},
+      {name:'小泡芙',map:'https://maps.app.goo.gl/4fyNYKoC41Zm4N488'},
+      {name:'宇治園 心斎橋本店（抹茶冰）',map:'https://maps.app.goo.gl/5b3EK4TRzm7KVhkN6'},
+      {name:'STIQ STOR',map:'https://maps.app.goo.gl/DcAuKF8qxjbDbeQN6'},
+      {name:'Kiddy Land PARCO（6F 角落生物、吉卜力）',map:'https://maps.app.goo.gl/6ZTPrUREAA2YZELSA'},
+      {name:'固力果跑跑人（到此一遊）',map:'https://maps.app.goo.gl/ThnPDAMh1RcdQ26d8'},
+    ]},
+    {name:'Kinnobuta Premium 心斎橋',icon:'🍽️',type:'food',note:'豬肉涮涮鍋',map:'https://maps.app.goo.gl/V8t9BPqrZbTTAbiG8',reserve:'18:00 已預約 2大1小（有預定費）'},
+  ]},
+  { date:'7/27', weekday:'一', items:[
+    {name:'大阪海遊館',icon:'🐟',type:'attraction',map:'https://maps.app.goo.gl/UegSLbQ31DQBuqxeA',note:'旁邊可以爬最矮的山'},
+    {name:'零食博物館 Tempozan',icon:'🍬',type:'attraction',map:'https://maps.app.goo.gl/YCRu1fZqx5frcWs38',note:'Confectionery Museum'},
+    {name:'難波逛街',icon:'🛍️',type:'shopping'},
+    {name:'蟹吉 Premium',icon:'🦀',type:'food',map:'https://maps.app.goo.gl/TkD9z3vVJmSx8YRCA',reserve:'18:00 已預約 2大1小'},
+  ]},
+  { date:'7/28', weekday:'二', items:[
+    {name:'大阪兒童樂園 Kids Plaza Osaka',icon:'🎠',type:'attraction',map:'https://maps.app.goo.gl/YpufHomyeWUMbmpz6'},
+    {name:'西洋茶館',icon:'☕',type:'food',map:'https://maps.app.goo.gl/WVFUuS9wPUNRtTQX8'},
+    {name:'梅田',icon:'🏬',type:'shopping',subs:[
+      {name:'petit main（梓琪的衣服）',map:'https://maps.app.goo.gl/9gVzoBVWt5Wk1WRx6'},
+      {name:'WeLoveDonut 甜甜圈',map:'https://maps.app.goo.gl/AHRHjUoHW2Bv9yJd8'},
+      {name:'Rilakkuma Store（買角落生物娃娃）',map:'https://maps.app.goo.gl/fernQro1ciFqRpYN7'},
+      {name:'Kiddyland 梅田店（找包姆與凱羅玩偶）',map:'https://maps.app.goo.gl/58Ws1DjipCKwE8316'},
+      {name:'EHONS UMEDA（包姆與凱羅周邊）',map:'https://maps.app.goo.gl/SPK186w3mopjqUTj8'},
+    ]},
+    {name:'燒肉 但馬屋',icon:'🥩',type:'food',map:'https://maps.app.goo.gl/m9tovDRdJ5rD6BCEA',reserve:'18:00 已預約 2大1小（有預定費）'},
+  ]},
+  { date:'7/29', weekday:'三', items:[
+    {name:'大阪府立大型兒童館 BIG BANG',icon:'🎪',type:'attraction',map:'https://maps.app.goo.gl/V1X7uLeU9ayS2kbq8',note:'10:00–17:00（最後入場 16:30）｜泉北高速鐵道線「泉ヶ丘」站'},
+    {name:'薩莉亞 Saizeriya',icon:'🍝',type:'food',map:'https://maps.app.goo.gl/gqfYZt6byZziFiP56',note:'堺筋浪速警察署前店'},
+  ]},
+  { date:'7/30', weekday:'四', items:[
+    {name:'整理行李、退房',icon:'🧳',type:'transport',note:'9 點起床，整理好直接去機場'},
+    {time:'13:45',name:'搭飛機回台灣',icon:'✈️',type:'transport',note:'中午的飛機，要提早到機場'},
+  ]},
+];
+
+const SHOPPING = [
+  {cat:'日用品',items:[
+    {name:'百玖香牙膏'},{name:'齒妍堂美白牙膏'},
+    {name:'花王洗面乳'},{name:'堀西ほりにし調味粉',detail:'金瓶'},
+  ]},
+  {cat:'保健',items:[
+    {name:'Asahi 益生菌'},
+    {name:'CABAGIN Kowa 高麗菜胃藥',detail:'300錠 ×2'},
+  ]},
+  {cat:'3C',items:[
+    {name:'Elecom 滑鼠',detail:'EX-G 人體工學 藍牙靜音（S）'},
+    {name:'Fitbit Air'},
+  ]},
+  {cat:'服飾 / 包包',items:[
+    {name:'petit main',detail:'梓琪的衣服'},
+    {name:'ABC MART ADIDAS 襪子'},
+    {name:'Manhattan Portage',detail:'VELOCITY SHOULDER BAG (LG) MP6042LTSP'},
+    {name:'Anello',detail:'後背包 / 側背包'},
+    {name:'Alpen',detail:'梓琪外套 + 運動用品'},
+    {name:'Mont-bell Wicron 系列'},
+  ]},
+  {cat:'廚房 / 餐具',items:[
+    {name:'藤次郎大阪店',detail:'湯匙、叉子；菜刀可考慮；那條街找陶瓷湯匙'},
+  ]},
+  {cat:'文具',items:[
+    {name:'鉛筆'},{name:'筆袋'},
+  ]},
+];
+
+const PACKING_BACKPACK = [
+  '平板','行動電源 + 充電線','梓琪的耳機','梓琪的點讀筆',
+  '梓琪的外套（飛機上用）','尿布','保溫杯（大人 + 梓琪）',
+  '梓琪的餐具','口罩','口香糖',
+];
+const PACKING_SUITCASE = [
+  '備用藥、中藥、眼藥水','牙刷、牙膏',
+  '梓琪噴鼻子、吸鼻子','尿布（一天一片）',
+  '洗碗精（大罐）、水果刀、保鮮盒、食物剪刀',
+  '梓琪艾草精油噴霧',
+  '衣服：穿 1 套帶 2 套',
+  '遮陽傘、電風扇','馬桶墊 ×20','浴巾','睡衣',
+];
+
+// --- RENDER ---
+function h(tag,props,...ch){
+  const el=document.createElement(tag);
+  if(props)Object.entries(props).forEach(([k,v])=>{
+    if(k==='className')el.className=v;
+    else if(k==='innerHTML')el.innerHTML=v;
+    else if(k.startsWith('on'))el.addEventListener(k.slice(2).toLowerCase(),v);
+    else el.setAttribute(k,v);
+  });
+  ch.flat().forEach(c=>{if(c)el.append(typeof c==='string'?document.createTextNode(c):c)});
+  return el;
+}
+
+function renderDayNav(){
+  const nav=document.getElementById('dayNav');
+  DAYS.forEach((d,i)=>{
+    const pill=h('button',{className:'day-pill'+(i===0?' active':''),onClick:()=>switchDay(i)},
+      d.date+'('+d.weekday+')');
+    pill.dataset.day=i;
+    nav.appendChild(pill);
+  });
+}
+
+function switchDay(idx){
+  document.querySelectorAll('.day-pill').forEach((p,i)=>p.classList.toggle('active',i===idx));
+  renderDay(idx);
+  document.querySelectorAll('.day-pill')[idx]?.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+}
+
+function renderDay(idx){
+  const wrap=document.getElementById('dayContent');
+  wrap.innerHTML='';
+  const d=DAYS[idx];
+  const hdr=h('div',{className:'day-header'},
+    h('div',{className:'day-header-date'},d.date+' ('+d.weekday+')'),
+  );
+  wrap.appendChild(hdr);
+
+  d.items.forEach((item,i)=>{
+    const card=h('div',{className:'card '+(item.type||'')});
+    card.style.animationDelay=(i*60)+'ms';
+    const header=h('div',{className:'card-header'});
+    header.appendChild(h('div',{className:'card-icon'},item.icon||'📍'));
+    const body=h('div',{className:'card-body'});
+    if(item.time)body.appendChild(h('div',{className:'card-time'},item.time));
+    body.appendChild(h('div',{className:'card-title'},item.name));
+    if(item.note)body.appendChild(h('div',{className:'card-note'},item.note));
+    if(item.reserve)body.appendChild(h('div',{className:'reserve-badge',innerHTML:'🔖 '+item.reserve}));
+    if(item.map)body.appendChild(h('a',{className:'map-link',href:item.map,target:'_blank',rel:'noopener'},'📍 開啟地圖'));
+    if(item.subs&&item.subs.length){
+      const sub=h('div',{className:'card-sub'});
+      item.subs.forEach(s=>{
+        const si=h('div',{className:'card-sub-item'});
+        const txt=h('span',null,s.name);
+        si.appendChild(txt);
+        if(s.map){
+          si.appendChild(h('a',{className:'map-link',href:s.map,target:'_blank',rel:'noopener',
+            style:'margin:0 0 0 auto;padding:4px 8px;font-size:12px'},'📍'));
+        }
+        sub.appendChild(si);
+      });
+      body.appendChild(sub);
+    }
+    header.appendChild(body);
+    card.appendChild(header);
+    wrap.appendChild(card);
+  });
+}
+
+function renderShopping(){
+  const wrap=document.getElementById('shopContent');
+  SHOPPING.forEach(cat=>{
+    wrap.appendChild(h('div',{className:'check-category'},cat.cat));
+    cat.items.forEach((item,i)=>{
+      const card=h('div',{className:'shop-card'});
+      card.style.animationDelay=(i*40)+'ms';
+      card.appendChild(h('div',{className:'shop-name'},item.name));
+      if(item.detail)card.appendChild(h('div',{className:'shop-detail'},item.detail));
+      wrap.appendChild(card);
+    });
+  });
+}
+
+function renderPacking(){
+  const wrap=document.getElementById('packContent');
+  const stored=JSON.parse(localStorage.getItem('pack-checks')||'{}');
+
+  function addSection(title,items,prefix){
+    wrap.appendChild(h('div',{className:'check-category'},title));
+    items.forEach((item,i)=>{
+      const key=prefix+i;
+      const el=h('div',{className:'check-item'+(stored[key]?' checked':''),
+        onClick:()=>{
+          el.classList.toggle('checked');
+          const s=JSON.parse(localStorage.getItem('pack-checks')||'{}');
+          s[key]=el.classList.contains('checked');
+          localStorage.setItem('pack-checks',JSON.stringify(s));
+        }});
+      el.style.animationDelay=(i*30)+'ms';
+      el.appendChild(h('div',{className:'check-box'}));
+      el.appendChild(h('div',{className:'check-label'},item));
+      wrap.appendChild(el);
+    });
+  }
+  addSection('🎒 隨身背包',PACKING_BACKPACK,'bp-');
+  addSection('🧳 行李箱',PACKING_SUITCASE,'sc-');
+}
+
+function renderNotes(){
+  const wrap=document.getElementById('notesContent');
+
+  // 行程注意
+  wrap.innerHTML+=`
+    <div class="note-card">
+      <h3>✈️ 行前準備</h3>
+      <ul>
+        <li>領日幣</li>
+        <li>上網卡（共 6 天，90 天內開通即可）</li>
+        <li>旅平險</li>
+        <li>梓琪備用藥</li>
+        <li>入境卡</li>
+        <li><a href="https://alinchuang.my.canva.site/" target="_blank" rel="noopener">優惠券連結</a></li>
+      </ul>
+    </div>
+    <div class="note-card">
+      <h3>⚠️ 行程注意</h3>
+      <ul>
+        <li>梓琪上飛機和吃飯要穿<strong>長褲</strong>（不喜歡冰冰的）</li>
+        <li>帶<strong>棒棒糖</strong>，減少耳朵痛</li>
+        <li>服飾優先順序：FREAK'S STORE → Alpen → MontBell → UNIQLO（無印可不看）</li>
+        <li>梓琪鞋子可在 Alpen 買</li>
+        <li>和牛好好吃，梓琪也喜歡</li>
+        <li>Bic Camera 先看好要買的，不然不用認真逛</li>
+        <li>零食專賣店買伴手禮，<strong>不要在機場買</strong>（最貴）</li>
+        <li>導航和整理行李是張開開專業</li>
+        <li>三套衣服每天洗，飯店有洗衣機</li>
+      </ul>
+    </div>
+    <div class="note-card">
+      <h3>👕 洗衣排程</h3>
+      <p>穿 1 套帶 2 套</p>
+      <div class="laundry-grid">
+        <div class="lh">日期</div><div class="lh">7/25</div><div class="lh">7/26</div><div class="lh">7/27</div><div class="lh">7/28</div><div class="lh">7/29</div><div class="lh">7/30</div>
+        <div class="lh">穿</div><div class="lc">1套</div><div class="lc">2套</div><div class="lc">3套</div><div class="lc">1套</div><div class="lc">2套</div><div class="lc">3套</div>
+        <div class="lh">洗</div><div class="lc">—</div><div class="lc">1套</div><div class="lc">2套</div><div class="lc">3套</div><div class="lc">—</div><div class="lc">—</div>
+      </div>
+    </div>
+    <div class="note-card">
+      <h3>💰 花費</h3>
+      <table class="expense-table">
+        <tr><td>住宿（Agoda）</td><td>¥13,935</td></tr>
+        <tr><td>機票</td><td>NT$29,595</td></tr>
+        <tr><td>保險</td><td>NT$3,264</td></tr>
+        <tr><td>上網卡</td><td>NT$1,158</td></tr>
+      </table>
+    </div>
+    <div class="note-card">
+      <h3>🆘 緊急資訊</h3>
+      <ul>
+        <li>日本急救電話：<strong>119</strong></li>
+        <li>日本報警電話：<strong>110</strong></li>
+        <li><a href="https://we-xpats.com/zh-tw/guide/as/jp/detail/2429/" target="_blank" rel="noopener">生病就醫指南</a></li>
+        <li><a href="https://www.e-japannavi.com/conversation/emergency.shtml" target="_blank" rel="noopener">緊急日文會話</a></li>
+      </ul>
+    </div>
+  `;
+}
+
+// --- TAB SWITCHING ---
+document.querySelectorAll('.bottom-bar button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.bottom-bar button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+// --- COUNTDOWN ---
+function updateCountdown(){
+  const start=new Date('2026-07-25T00:00:00+08:00');
+  const end=new Date('2026-07-30T23:59:59+08:00');
+  const now=new Date();
+  const el=document.getElementById('countdown');
+  if(now<start){
+    const diff=Math.ceil((start-now)/(1000*60*60*24));
+    el.textContent='✨ 距離出發還有 '+diff+' 天';
+  }else if(now<=end){
+    el.textContent='🎌 旅途愉快！享受大阪吧';
+  }else{
+    el.textContent='📸 美好回憶';
+  }
+}
+
+// --- AUTO DAY ---
+function autoSelectDay(){
+  const now=new Date();
+  const dayMap={25:0,26:1,27:2,28:3,29:4,30:5};
+  if(now.getFullYear()===2026&&now.getMonth()===6&&dayMap[now.getDate()]!==undefined){
+    switchDay(dayMap[now.getDate()]);
+  }
+}
+
+// --- INIT ---
+renderDayNav();
+renderDay(0);
+renderShopping();
+renderPacking();
+renderNotes();
+updateCountdown();
+autoSelectDay();
+</script>
+</body>
+</html>
