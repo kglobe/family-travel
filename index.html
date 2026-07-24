@@ -512,7 +512,7 @@ const DAYS = [
 const SHOPPING = [
   {cat:'日用品',items:[
     {name:'百玖香牙膏'},{name:'齒妍堂美白牙膏'},
-    {name:'花王洗面乳'},{name:'堀西ほりにし調味粉',detail:'金瓶'},{name:'香鬆'},
+    {name:'花王洗面乳',detail:'首選：Bioré 洗顏乳 リッチモイスチャー（豐潤保濕）或 モイスチャー（藍管），軟管好帶；話題款：THE FACE 泡洗顏（角栓分解，瓶裝較佔空間）',link:'https://my-best.com/34459'},{name:'堀西ほりにし調味粉',detail:'金瓶'},{name:'香鬆'},
   ]},
   {cat:'保健',items:[
     {name:'Asahi 益生菌'},
@@ -528,11 +528,14 @@ const SHOPPING = [
     {name:'Manhattan Portage',detail:'VELOCITY SHOULDER BAG (LG) MP6042LTSP'},
     {name:'Anello',detail:'後背包 / 側背包'},
     {name:'Alpen',detail:'梓琪外套 + 運動用品'},
-    {name:'Mont-bell Wicron 系列'},
+    {name:'Mont-bell',detail:'Wicron 系列（短袖、薄長袖）、背包、溫度計、掛鉤'},
   ]},
   {cat:'廚房 / 餐具',items:[
     {name:'藤次郎大阪店',detail:'湯匙、叉子；菜刀可考慮；那條街找陶瓷湯匙'},
     {name:'大創',detail:'廚房垃圾袋掛鉤'},
+  ]},
+  {cat:'玩具',items:[
+    {name:'角落生物娃娃',detail:'黑珍珠、黃粉圓、炸魚尾'},
   ]},
   {cat:'文具',items:[
     {name:'鉛筆'},{name:'筆袋'},
@@ -540,7 +543,7 @@ const SHOPPING = [
 ];
 
 const PACKING_BACKPACK = [
-  '平板','行動電源 + 充電線','梓琪的耳機','梓琪的點讀筆',
+  '平板','行動電源 + 充電線','梓琪的耳機',
   '梓琪的外套（飛機上用）','尿布','保溫杯（大人 + 梓琪）',
   '梓琪的餐具','口罩','口香糖',
 ];
@@ -638,6 +641,8 @@ function renderShopping(){
       card.style.animationDelay=(i*40)+'ms';
       card.appendChild(h('div',{className:'shop-name'},item.name));
       if(item.detail)card.appendChild(h('div',{className:'shop-detail'},item.detail));
+      if(item.link)card.appendChild(h('a',{className:'map-link',href:item.link,target:'_blank',rel:'noopener'},
+        icon('open_in_new'),'比較排行'));
       wrap.appendChild(card);
     });
   });
@@ -677,7 +682,7 @@ function renderNotes(){
         <li>領日幣</li>
         <li>上網卡（共 6 天，90 天內開通即可）</li>
         <li>旅平險</li>
-        <li>梓琪備用藥</li>
+        <li>備用藥</li>
         <li>入境卡</li>
       </ul>
     </div>
@@ -705,7 +710,6 @@ function renderNotes(){
         <li>和牛好好吃，梓琪也喜歡</li>
         <li>Bic Camera 先看好要買的，不然不用認真逛</li>
         <li>零食專賣店買伴手禮，<strong>不要在機場買</strong>（最貴）</li>
-        <li>導航和整理行李是張開開專業</li>
         <li>三套衣服每天洗，飯店有洗衣機</li>
       </ul>
     </div>
