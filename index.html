@@ -781,7 +781,7 @@ document.querySelectorAll('.bottom-bar button').forEach(btn=>{
 
 // --- COUNTDOWN ---
 function updateCountdown(){
-  const start=new Date('2026-07-25T00:00:00+08:00');
+  const start=new Date('2026-07-25T08:30:00+08:00');
   const end=new Date('2026-07-30T23:59:59+08:00');
   const now=new Date();
   const el=document.getElementById('countdown');
@@ -795,7 +795,8 @@ function updateCountdown(){
       plane.classList.add('takeoff');
       plane.addEventListener('animationend',()=>plane.classList.remove('takeoff'),{once:true});
     };
-    el.append(plane,'距離出發還有 '+diff+' 天');
+    const sameDay=start-now<1000*60*60*24&&now.getDate()===start.getDate();
+    el.append(plane,sameDay?'今天出發！KHH 08:30 起飛':'距離出發還有 '+diff+' 天');
   }else if(now<=end){
     el.append(icon('celebration'),'旅途愉快！享受大阪吧');
   }else{
