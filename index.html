@@ -527,8 +527,13 @@ const SHOPPING = [
     {name:'ABC MART ADIDAS 襪子'},
     {name:'Manhattan Portage',detail:'VELOCITY SHOULDER BAG (LG) MP6042LTSP'},
     {name:'Anello',detail:'後背包 / 側背包'},
-    {name:'Alpen',detail:'梓琪外套 + 運動用品'},
-    {name:'Mont-bell',detail:'Wicron 系列（短袖、薄長袖）、背包、溫度計、掛鉤'},
+    {name:'Alpen',detail:'梓琪外套 + 運動用品；Oakley 運動長褲、短褲'},
+    {name:'Mont-bell',detail:'Wicron 系列（短袖、薄長袖）、背包、溫度計、掛鉤、小錢包（Trail Wallet トレールワレット）、防曬外套'},
+    {name:'Uniqlo',links:[
+      {label:'亞麻混紡休閒短褲',url:'https://www.uniqlo.com/tw/zh_TW/product-detail.html?productCode=u0000000053311'},
+      {label:'商品 2',url:'https://www.uniqlo.com/tw/zh_TW/product-detail.html?productCode=u0000000053502'},
+      {label:'商品 3',url:'https://www.uniqlo.com/tw/zh_TW/product-detail.html?productCode=u0000000053341'},
+    ]},
   ]},
   {cat:'廚房 / 餐具',items:[
     {name:'藤次郎大阪店',detail:'湯匙、叉子；菜刀可考慮；那條街找陶瓷湯匙'},
@@ -643,6 +648,8 @@ function renderShopping(){
       if(item.detail)card.appendChild(h('div',{className:'shop-detail'},item.detail));
       if(item.link)card.appendChild(h('a',{className:'map-link',href:item.link,target:'_blank',rel:'noopener'},
         icon('open_in_new'),'比較排行'));
+      if(item.links)item.links.forEach(l=>card.appendChild(
+        h('a',{className:'map-link',href:l.url,target:'_blank',rel:'noopener'},icon('open_in_new'),l.label)));
       wrap.appendChild(card);
     });
   });
