@@ -452,7 +452,7 @@ const DAYS = [
   { date:'7/25', weekday:'六', items:[
     {time:'6:00',name:'搭計程車前往機場',icon:'local_taxi',type:'transport',note:'預計 6:20 到機場'},
     {time:'8:30',name:'搭飛機去大阪',icon:'flight_takeoff',type:'transport',note:'KHH 08:30 起飛（GMT+8）→ KIX 12:40 抵達（GMT+9）',pdf:'https://drive.google.com/file/d/1O0TGBvwEofTS5JyviTLm6QKAWegTntz6/view?usp=drive_link'},
-    {name:'南海電鐵 → 大阪市區',icon:'train',type:'transport',note:'抵達關西機場後搭南海電鐵進市區'},
+    {name:'南海電鐵 → 大阪市區',icon:'train',type:'transport',note:'抵達關西機場後搭南海電鐵進市區',link:'https://gototravel.tw/nankai-limited-express/'},
     {name:'ESLEAD HOTEL Osaka Nipponbashi',icon:'hotel',type:'transport',note:'先放行李',map:'https://maps.app.goo.gl/Hu8ccNyhdujieZWL8'},
     {name:'Super Kids Land 本店',icon:'toys',type:'shopping',map:'https://maps.app.goo.gl/5k5QuscjUjUTbUtW9',note:'玩具店'},
     {name:'難波公園 Namba Parks',icon:'local_mall',type:'shopping',note:'百貨公司',subs:[
@@ -617,6 +617,10 @@ function renderDay(idx){
     if(item.pdf){
       body.appendChild(h('a',{className:'map-link',href:item.pdf,target:'_blank',rel:'noopener'},
         icon('picture_as_pdf'),'預訂 PDF'));
+    }
+    if(item.link){
+      body.appendChild(h('a',{className:'map-link',href:item.link,target:'_blank',rel:'noopener'},
+        icon('open_in_new'),'南海電鐵指南'));
     }
     if(item.subs&&item.subs.length){
       const sub=h('div',{className:'card-sub'});
