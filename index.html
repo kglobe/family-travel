@@ -782,12 +782,12 @@ document.querySelectorAll('.bottom-bar button').forEach(btn=>{
 // --- COUNTDOWN ---
 function updateCountdown(){
   const start=new Date('2026-07-25T08:30:00+08:00');
+  const back=new Date('2026-07-30T13:45:00+09:00');
   const end=new Date('2026-07-30T23:59:59+08:00');
   const now=new Date();
   const el=document.getElementById('countdown');
   el.innerHTML='';
-  if(now<start){
-    const diff=Math.ceil((start-now)/(1000*60*60*24));
+  const makePlane=()=>{
     const plane=icon('flight');
     el.style.cursor='pointer';
     el.onclick=()=>{
@@ -795,8 +795,14 @@ function updateCountdown(){
       plane.classList.add('takeoff');
       plane.addEventListener('animationend',()=>plane.classList.remove('takeoff'),{once:true});
     };
+    return plane;
+  };
+  if(now<start){
+    const diff=Math.ceil((start-now)/(1000*60*60*24));
     const sameDay=start-now<1000*60*60*24&&now.getDate()===start.getDate();
-    el.append(plane,sameDay?'今天出發！KHH 08:30 起飛':'距離出發還有 '+diff+' 天');
+    el.append(makePlane(),sameDay?'今天出發！KHH 08:30 起飛':'距離出發還有 '+diff+' 天');
+  }else if(now<back&&now.getDate()===back.getDate()){
+    el.append(makePlane(),'今天回台灣！KIX 13:45 起飛');
   }else if(now<=end){
     el.append(icon('celebration'),'旅途愉快！享受大阪吧');
   }else{
